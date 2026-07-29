@@ -3,9 +3,49 @@
 import type React from "react"
 import { useState, useEffect, useRef } from "react"
 import { initializePaddle, type Paddle } from "@paddle/paddle-js"
-import ProfessionalPricingGrid from "@/components/professional-pricing-grid"
 
-
+const pricingPlans = [
+  {
+    name: "Standard",
+    description: "Ideal for small businesses automating basic operations.",
+    price: 1000,
+    priceId: "pri_01kvbmx7mxcn1wmq78v8hznccz",
+    highlighted: false,
+    features: [
+      "24/7 AI Customer Support Chatbot setup",
+      "Basic Lead Generation & CRM Integration",
+      "Email & SMS Marketing Automation",
+      "Monthly ROI & Performance Reports",
+    ],
+  },
+  {
+    name: "Pro",
+    description: "Designed for growing SMEs looking to scale sales and workflows.",
+    price: 2000,
+    priceId: "pri_01kvbzv9bxwx3eprpst6q4m10x",
+    highlighted: true,
+    features: [
+      "Everything in Standard + Advanced AI Sales Agents",
+      "Full Workflow & Internal Process Automation",
+      "Automated Lead Nurturing & Follow-ups",
+      "Multi-channel integration (WhatsApp, Email, CRM)",
+      "Bi-weekly strategic optimization calls",
+    ],
+  },
+  {
+    name: "Enterprise",
+    description: "Tailored for large businesses requiring custom AI frameworks.",
+    price: 3500,
+    priceId: "pri_01kvbnhgrdrhvv7fvwp1ax2nnq",
+    highlighted: false,
+    features: [
+      "Custom AI Solutions built from scratch for your business infrastructure",
+      "Unlimited contact management and database synching",
+      "Dedicated AI Engineer & VIP Support (Immediate Response)",
+      "Full white-glove implementation and weekly strategy sessions",
+    ],
+  },
+]
 
 const policies = {
   terms: {
@@ -35,11 +75,6 @@ export default function Page() {
   const [showPopup, setShowPopup] = useState(false)
   const [showResults, setShowResults] = useState(false)
   const [activePolicy, setActivePolicy] = useState<PolicyKey | null>(null)
-  const [showStrategyCall, setShowStrategyCall] = useState(false)
-  const [strategyCallForm, setStrategyCallForm] = useState({
-    fullName: "",
-    companyName: "",
-  })
 
   // Form state
   const [formData, setFormData] = useState({
@@ -63,61 +98,16 @@ export default function Page() {
     })
   }, [])
 
-  const bookStrategyCall = async (selectedTier: string) => {
-    if (!strategyCallForm.fullName || !strategyCallForm.companyName) {
-      alert("Please fill in all required fields")
-      return
-    }
-
-    const payload = {
-      name: strategyCallForm.fullName,
-      company: strategyCallForm.companyName,
-      email: "abdallatifelabdi@gmail.com",
-      lostRevenue: results.lostMonthly,
-    }
-
-    try {
-      const res = await fetch("/api/strategy-call", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      })
-
-      if (res.ok) {
-        alert("Strategy call booking submitted! We'll be in touch shortly.")
-        setShowStrategyCall(false)
-        setStrategyCallForm({ fullName: "", companyName: "" })
-      } else {
-        throw new Error("Failed to submit")
-      }
-    } catch (error) {
-      console.error(error)
-      alert("Failed to book strategy call. Please try again.")
-    }
-  }
-
-  const openCheckout = (priceId: string, planName: string) => {
+  const openCheckout = (priceId: string) => {
     if (!paddleRef.current) {
       console.log("[v0] Paddle not initialized yet")
       return
     }
-
-    // Generate a unique workspace ID for this purchase
-    const workspaceId = `ws_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
     paddleRef.current.Checkout.open({
       items: [{ priceId, quantity: 1 }],
       settings: {
         locale: "en",
       },
-      customer: {
-        email: "", // Leave empty; user provides in checkout
-      },
-      customData: {
-        workspace_id: workspaceId,
-        plan: planName.toLowerCase(),
-      },
-      successUrl: `${typeof window !== "undefined" ? window.location.origin : ""}/onboarding?workspace_id=${workspaceId}`,
     })
   }
 
@@ -218,9 +208,9 @@ export default function Page() {
       {/* CALCULATOR SECTION */}
       <section id="calculator" className="py-20 max-w-5xl mx-auto px-4 scroll-mt-20">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3">Enterprise Revenue Opportunity Assessment</h2>
+          <h2 className="text-3xl font-bold mb-3">Revenue Leakage Simulator</h2>
           <p className="text-slate-400">
-            Analyze your organization's untapped revenue potential. Input your metrics to quantify lost opportunities and competitive gaps.
+            Input your existing business metrics to isolate dormant equity and speed-to-lead gaps.
           </p>
         </div>
 
@@ -230,9 +220,9 @@ export default function Page() {
             {/* Slider 1 */}
             <div className="mb-8">
               <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-semibold text-slate-300">Active Client Portfolio</label>
+                <label className="text-sm font-semibold text-slate-300">Past Customer Database</label>
                 <span className="text-indigo-400 font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-sm">
-                  {databaseSize.toLocaleString()} Organizations
+                  {databaseSize.toLocaleString()} Customers
                 </span>
               </div>
               <input
@@ -245,15 +235,15 @@ export default function Page() {
                 className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
               />
               <div className="flex justify-between text-xs text-slate-500 mt-1">
-                <span>100 Clients</span>
-                <span>10,000 Clients</span>
+                <span>100</span>
+                <span>10,000</span>
               </div>
             </div>
 
             {/* Slider 2 */}
             <div className="mb-8">
               <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-semibold text-slate-300">Average Annual Contract Value (ACV)</label>
+                <label className="text-sm font-semibold text-slate-300">Average Value per Contract/Job</label>
                 <span className="text-indigo-400 font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-sm">
                   ${ticketValue.toLocaleString()} USD
                 </span>
@@ -276,9 +266,9 @@ export default function Page() {
             {/* Slider 3 */}
             <div className="mb-8">
               <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-semibold text-slate-300">Monthly Service Inquiries Lost to Competitors</label>
+                <label className="text-sm font-semibold text-slate-300">Monthly Inbound New Leads</label>
                 <span className="text-indigo-400 font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-sm">
-                  {newLeads.toLocaleString()} Inquiries
+                  {newLeads.toLocaleString()} Leads/Mo
                 </span>
               </div>
               <input
@@ -291,8 +281,8 @@ export default function Page() {
                 className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
               />
               <div className="flex justify-between text-xs text-slate-500 mt-1">
-                <span>10 Inquiries</span>
-                <span>500 Inquiries</span>
+                <span>10 Leads</span>
+                <span>500 Leads</span>
               </div>
             </div>
 
@@ -319,7 +309,7 @@ export default function Page() {
               <div className="space-y-6">
                 <div>
                   <span className="text-xs uppercase tracking-wider font-semibold text-slate-500 block mb-1">
-                    Annual Revenue Loss (Inactive Accounts)
+                    Estimated Hidden Database Revenue
                   </span>
                   <div className="text-3xl sm:text-4xl font-extrabold text-indigo-400 font-mono">
                     ${results.lostPast.toLocaleString()}
@@ -328,7 +318,7 @@ export default function Page() {
 
                 <div className="pt-4 border-t border-white/10">
                   <span className="text-xs uppercase tracking-wider font-semibold text-slate-500 block mb-1">
-                    Monthly Opportunity Cost
+                    Monthly Leaking Lead Loss
                   </span>
                   <div className="text-3xl sm:text-4xl font-extrabold text-purple-400 font-mono">
                     ${results.lostMonthly.toLocaleString()}{" "}
@@ -336,17 +326,10 @@ export default function Page() {
                   </div>
                 </div>
 
-                <div className="pt-6 space-y-3">
-                  <p className="text-xs text-slate-400 text-center">Ready to discuss your optimization strategy?</p>
-                  <a
-                    href="mailto:abdallatifelabdi@gmail.com?subject=AI%20Service%20Package%20Inquiry%20-%20Revenue%20Analysis"
-                    className="w-full bg-white text-black hover:bg-slate-200 font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 block"
-                  >
-                    Contact Me Directly via Email
-                  </a>
-                  <p className="text-xs text-slate-500 text-center">
-                    Email: <span className="text-indigo-400 font-semibold">abdallatifelabdi@gmail.com</span>
-                  </p>
+                <div className="pt-6">
+                  <button className="w-full bg-white text-black hover:bg-slate-200 font-bold py-3.5 rounded-xl transition">
+                    Book Automation Strategy Call
+                  </button>
                 </div>
               </div>
             )}
@@ -354,13 +337,81 @@ export default function Page() {
         </div>
       </section>
 
-      {/* PROFESSIONAL PRICING SECTION */}
-      <ProfessionalPricingGrid
-        onTierSelect={(tierName) => {
-          console.log("[v0] Tier selected:", tierName)
-          setShowStrategyCall(true)
-        }}
-      />
+      {/* PRICING SECTION */}
+      <section id="pricing" className="py-20 border-t border-white/10 scroll-mt-20">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-14">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-5">
+              {"✦ FLEXIBLE PLANS"}
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight mb-3 text-balance">
+              Choose Your{" "}
+              <span className="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                Growth Engine
+              </span>
+            </h2>
+            <p className="text-slate-400 max-w-2xl mx-auto text-pretty">
+              Transparent monthly pricing built to scale with your pipeline. Cancel or upgrade anytime.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+            {pricingPlans.map((plan) => (
+              <div
+                key={plan.name}
+                className={`relative flex flex-col rounded-2xl p-8 transition-all ${
+                  plan.highlighted
+                    ? "bg-[#13121c] border-2 border-indigo-500 shadow-2xl shadow-indigo-500/20 md:-translate-y-3"
+                    : "bg-[#0f0f12] border border-white/10"
+                }`}
+              >
+                {plan.highlighted && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wide">
+                    Most Popular
+                  </span>
+                )}
+
+                <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
+                <p className="text-sm text-slate-400 mb-6 min-h-[40px]">{plan.description}</p>
+
+                <div className="flex items-baseline gap-1 mb-6">
+                  <span className="text-4xl font-extrabold text-white font-mono">${plan.price.toLocaleString()}</span>
+                  <span className="text-slate-500 text-sm">/month</span>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-1">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3 text-sm text-slate-300">
+                      <span
+                        className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full ${
+                          plan.highlighted ? "bg-indigo-500/20 text-indigo-400" : "bg-white/5 text-slate-400"
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      </span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <button
+                  onClick={() => openCheckout(plan.priceId)}
+                  className={`w-full font-bold py-3.5 rounded-xl transition ${
+                    plan.highlighted
+                      ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/20"
+                      : "bg-white text-black hover:bg-slate-200"
+                  }`}
+                >
+                  Get Started
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* LEAD CAPTURE POPUP MODAL */}
       {showPopup && (
@@ -412,87 +463,6 @@ export default function Page() {
                 {"Reveal Results →"}
               </button>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* STRATEGY CALL BOOKING MODAL */}
-      {showStrategyCall && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
-          onClick={() => setShowStrategyCall(false)}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="strategy-title"
-        >
-          <div
-            className="bg-[#0f0f12] border border-white/10 rounded-2xl w-full max-w-md shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between p-6 border-b border-white/10">
-              <h3 id="strategy-title" className="text-lg font-bold text-white">
-                Book Your Strategy Call
-              </h3>
-              <button
-                onClick={() => setShowStrategyCall(false)}
-                aria-label="Close"
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 hover:bg-white/5 hover:text-white transition"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
-            </div>
-            <div className="p-6 space-y-4">
-              <div>
-                <label className="text-sm font-semibold text-slate-300 block mb-2">Full Name</label>
-                <input
-                  type="text"
-                  value={strategyCallForm.fullName}
-                  onChange={(e) => setStrategyCallForm({ ...strategyCallForm, fullName: e.target.value })}
-                  placeholder="Your name"
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
-                />
-              </div>
-              <div>
-                <label className="text-sm font-semibold text-slate-300 block mb-2">Company Name</label>
-                <input
-                  type="text"
-                  value={strategyCallForm.companyName}
-                  onChange={(e) => setStrategyCallForm({ ...strategyCallForm, companyName: e.target.value })}
-                  placeholder="Your company"
-                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
-                />
-              </div>
-              <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4">
-                <p className="text-xs text-slate-400 mb-2">Your calculated revenue potential:</p>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div>
-                    <span className="text-slate-500">Hidden Revenue:</span>
-                    <p className="font-bold text-indigo-400">${results.lostPast.toLocaleString()}</p>
-                  </div>
-                  <div>
-                    <span className="text-slate-500">Monthly Loss:</span>
-                    <p className="font-bold text-purple-400">${results.lostMonthly.toLocaleString()}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="p-6 border-t border-white/10 space-y-2">
-              <button
-                onClick={() => bookStrategyCall("standard")}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold py-3 rounded-lg transition-all duration-300 hover:scale-105"
-              >
-                Schedule Strategy Call
-              </button>
-              <button
-                onClick={() => setShowStrategyCall(false)}
-                className="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium py-3 rounded-lg transition"
-              >
-                Cancel
-              </button>
-            </div>
           </div>
         </div>
       )}
