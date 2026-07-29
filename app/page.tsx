@@ -207,22 +207,29 @@ export default function Page() {
 
       {/* CALCULATOR SECTION */}
       <section id="calculator" className="py-20 max-w-5xl mx-auto px-4 scroll-mt-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-3">Revenue Leakage Simulator</h2>
-          <p className="text-slate-400">
-            Input your existing business metrics to isolate dormant equity and speed-to-lead gaps.
+        <div className="text-center mb-16">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-4">
+            {"✦ AI-POWERED ANALYSIS"}
+          </span>
+          <h2 className="text-4xl sm:text-5xl font-black tracking-tight mb-4 bg-gradient-to-r from-white via-slate-300 to-slate-400 bg-clip-text text-transparent">
+            Calculate Your Revenue Impact
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Analyze your organization's hidden opportunities. Our AI quantifies dormant accounts and conversion gaps with industry-leading precision.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
           {/* SLIDERS CARD */}
-          <div className="lg:col-span-7 bg-[#0f0f12] border border-white/10 p-6 sm:p-8 rounded-2xl shadow-xl">
+          <div className="lg:col-span-7 bg-gradient-to-br from-slate-900 to-slate-950 border border-indigo-500/20 p-8 sm:p-10 rounded-2xl shadow-2xl shadow-indigo-500/10">
+            <h3 className="text-lg font-bold text-white mb-8">Configure Your Metrics</h3>
+            
             {/* Slider 1 */}
-            <div className="mb-8">
-              <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-semibold text-slate-300">Past Customer Database</label>
-                <span className="text-indigo-400 font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-sm">
-                  {databaseSize.toLocaleString()} Customers
+            <div className="mb-10">
+              <div className="flex justify-between items-center mb-3">
+                <label className="text-sm font-semibold text-slate-200">Active Client Base</label>
+                <span className="text-indigo-300 font-mono font-bold px-3 py-1 rounded-lg bg-indigo-500/15 text-sm border border-indigo-500/30">
+                  {databaseSize.toLocaleString()} accounts
                 </span>
               </div>
               <input
@@ -232,20 +239,20 @@ export default function Page() {
                 step="50"
                 value={databaseSize}
                 onChange={(e) => setDatabaseSize(Number(e.target.value))}
-                className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-full cursor-pointer hover:accent-indigo-400 transition"
               />
-              <div className="flex justify-between text-xs text-slate-500 mt-1">
-                <span>100</span>
-                <span>10,000</span>
+              <div className="flex justify-between text-xs text-slate-500 mt-2 font-medium">
+                <span>100 accounts</span>
+                <span>10K+ accounts</span>
               </div>
             </div>
 
             {/* Slider 2 */}
-            <div className="mb-8">
-              <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-semibold text-slate-300">Average Value per Contract/Job</label>
-                <span className="text-indigo-400 font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-sm">
-                  ${ticketValue.toLocaleString()} USD
+            <div className="mb-10">
+              <div className="flex justify-between items-center mb-3">
+                <label className="text-sm font-semibold text-slate-200">Average Deal Value</label>
+                <span className="text-indigo-300 font-mono font-bold px-3 py-1 rounded-lg bg-indigo-500/15 text-sm border border-indigo-500/30">
+                  ${ticketValue.toLocaleString()}
                 </span>
               </div>
               <input
@@ -255,20 +262,20 @@ export default function Page() {
                 step="100"
                 value={ticketValue}
                 onChange={(e) => setTicketValue(Number(e.target.value))}
-                className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-full cursor-pointer hover:accent-indigo-400 transition"
               />
-              <div className="flex justify-between text-xs text-slate-500 mt-1">
+              <div className="flex justify-between text-xs text-slate-500 mt-2 font-medium">
                 <span>$500</span>
                 <span>$20,000</span>
               </div>
             </div>
 
             {/* Slider 3 */}
-            <div className="mb-8">
-              <div className="flex justify-between items-center mb-2">
-                <label className="text-sm font-semibold text-slate-300">Monthly Inbound New Leads</label>
-                <span className="text-indigo-400 font-mono font-bold px-2 py-0.5 rounded bg-indigo-500/10 text-sm">
-                  {newLeads.toLocaleString()} Leads/Mo
+            <div className="mb-10">
+              <div className="flex justify-between items-center mb-3">
+                <label className="text-sm font-semibold text-slate-200">Monthly Conversions</label>
+                <span className="text-indigo-300 font-mono font-bold px-3 py-1 rounded-lg bg-indigo-500/15 text-sm border border-indigo-500/30">
+                  {newLeads.toLocaleString()} deals/mo
                 </span>
               </div>
               <input
@@ -278,61 +285,70 @@ export default function Page() {
                 step="5"
                 value={newLeads}
                 onChange={(e) => setNewLeads(Number(e.target.value))}
-                className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-lg cursor-pointer"
+                className="w-full accent-indigo-500 bg-slate-800 h-2 rounded-full cursor-pointer hover:accent-indigo-400 transition"
               />
-              <div className="flex justify-between text-xs text-slate-500 mt-1">
-                <span>10 Leads</span>
-                <span>500 Leads</span>
+              <div className="flex justify-between text-xs text-slate-500 mt-2 font-medium">
+                <span>10 deals</span>
+                <span>500+ deals</span>
               </div>
             </div>
 
             <button
               onClick={calculateRevenue}
               disabled={isLoading}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-70"
+              className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/50 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transform hover:scale-105"
             >
-              {isLoading ? "Analyzing Database Loss Patterns..." : "CALCULATE MY LOST REVENUE ➔"}
+              {isLoading ? "Analyzing Impact..." : "Calculate Revenue Impact"}
             </button>
           </div>
 
           {/* RESULTS CARD */}
-          <div className="lg:col-span-5 bg-[#0f0f12] border border-white/10 p-6 sm:p-8 rounded-2xl shadow-xl min-h-[380px] flex flex-col justify-between relative overflow-hidden">
-            {!showResults ? (
-              <div className="my-auto text-center py-12">
-                <h3 className="text-lg font-medium text-slate-200 mb-1">Analysis Status: Pending</h3>
-                <p className="text-sm text-slate-500 max-w-xs mx-auto">
-                  Configure your slider metrics and press the calculation action button above to lock in your pipeline
-                  diagnostic.
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                <div>
-                  <span className="text-xs uppercase tracking-wider font-semibold text-slate-500 block mb-1">
-                    Estimated Hidden Database Revenue
-                  </span>
-                  <div className="text-3xl sm:text-4xl font-extrabold text-indigo-400 font-mono">
-                    ${results.lostPast.toLocaleString()}
+          <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 to-slate-950 border border-indigo-500/20 p-8 sm:p-10 rounded-2xl shadow-2xl shadow-indigo-500/10 min-h-[400px] flex flex-col justify-between relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent pointer-events-none"></div>
+            <div className="relative z-10">
+              {!showResults ? (
+                <div className="my-auto text-center py-12">
+                  <div className="mb-4">
+                    <svg className="w-12 h-12 mx-auto text-indigo-400/50 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-100 mb-2">Ready to Calculate</h3>
+                  <p className="text-sm text-slate-400">
+                    Adjust your metrics above and click to unlock your revenue potential analysis.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-7">
+                  <div className="p-4 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+                    <span className="text-xs uppercase tracking-wider font-bold text-indigo-300 block mb-2">
+                      Hidden Revenue Opportunity
+                    </span>
+                    <div className="text-4xl font-black text-indigo-400 font-mono">
+                      ${results.lostPast.toLocaleString()}
+                    </div>
+                    <p className="text-xs text-slate-400 mt-2">Annual value locked in inactive accounts</p>
+                  </div>
+
+                  <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                    <span className="text-xs uppercase tracking-wider font-bold text-purple-300 block mb-2">
+                      Monthly Revenue Gap
+                    </span>
+                    <div className="text-4xl font-black text-purple-400 font-mono">
+                      ${results.lostMonthly.toLocaleString()}{" "}
+                      <span className="text-base text-slate-400 font-sans font-normal">/mo</span>
+                    </div>
+                    <p className="text-xs text-slate-400 mt-2">Recurring opportunity through reactivation</p>
+                  </div>
+
+                  <div className="pt-4">
+                    <button className="w-full bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-700 hover:to-indigo-600 text-white font-bold py-3 rounded-lg transition-all shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/50 transform hover:scale-105">
+                      Schedule Strategy Session
+                    </button>
                   </div>
                 </div>
-
-                <div className="pt-4 border-t border-white/10">
-                  <span className="text-xs uppercase tracking-wider font-semibold text-slate-500 block mb-1">
-                    Monthly Leaking Lead Loss
-                  </span>
-                  <div className="text-3xl sm:text-4xl font-extrabold text-purple-400 font-mono">
-                    ${results.lostMonthly.toLocaleString()}{" "}
-                    <span className="text-xs text-slate-500 font-sans font-normal">/ mo</span>
-                  </div>
-                </div>
-
-                <div className="pt-6">
-                  <button className="w-full bg-white text-black hover:bg-slate-200 font-bold py-3.5 rounded-xl transition">
-                    Book Automation Strategy Call
-                  </button>
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </section>
