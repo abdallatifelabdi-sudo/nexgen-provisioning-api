@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Lead Recovery AI - Automated Lead Management for Dental Practices</title>
+    <meta name="description" content="Recover more dental revenue from missed and unbooked leads — 24/7 AI-powered administrative lead recovery.">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- STICKY NAVIGATION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<nav class="sticky-nav">
+    <div class="nav-container">
+        <div class="logo">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">Dental Lead Recovery AI</span>
+        </div>
+        <div class="nav-links">
+            <a href="#benefits">Benefits</a>
+            <a href="#demo">Demo</a>
+            <a href="#calculator">ROI Calculator</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#faq">FAQ</a>
+        </div>
+        <button class="nav-cta" id="nav-start-pilot">Start Pilot</button>
+    </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HERO SECTION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Recover More Dental Revenue from Missed and Unbooked Leads — 24/7</h1>
+        <p class="hero-subtitle">Administrative AI-powered lead recovery for US private dental practices. No diagnosis. No clinical advice. Practice-controlled workflows.</p>
+        
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-number">86%</span>
+                <span class="stat-label">Unbooked leads nationally</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">$500K+</span>
+                <span class="stat-label">Avg annual recovery potential</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">24/7</span>
+                <span class="stat-label">Automated follow-up</span>
+            </div>
+        </div>
+
+        <button class="cta-primary" id="hero-start-pilot">Start Your 30-Day Pilot Today</button>
+        <p class="cta-subtext">Secure checkout powered by Paddle. No credit card required until purchase.</p>
+    </div>
+
+    <div class="hero-visual">
+        <div class="dashboard-preview">
+            <div class="dashboard-header">
+                <div class="dashboard-dot red"></div>
+                <div class="dashboard-dot yellow"></div>
+                <div class="dashboard-dot green"></div>
+            </div>
+            <div class="dashboard-body">
+                <div class="dashboard-section">
+                    <h3>Sample demo data</h3>
+                    <div class="demo-data">
+                        <div class="demo-row">
+                            <span class="demo-label">New Leads (24h)</span>
+                            <span class="demo-value">14</span>
+                        </div>
+                        <div class="demo-row">
+                            <span class="demo-label">Recovered Today</span>
+                            <span class="demo-value">3</span>
+                        </div>
+                        <div class="demo-row">
+                            <span class="demo-label">Booked Appointments</span>
+                            <span class="demo-value">2</span>
+                        </div>
+                        <div class="demo-row">
+                            <span class="demo-label">Escalated (Human)</span>
+                            <span class="demo-value">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PRODUCT BENEFITS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="benefits" id="benefits">
+    <div class="container">
+        <h2>How Dental Lead Recovery AI Works</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">📥</div>
+                <h3>Instant Lead Capture</h3>
+                <p>Automatically receive and qualify missed call-backs, contact form submissions, and unbooked appointment inquiries 24/7.</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">🎯</div>
+                <h3>Intent Qualification</h3>
+                <p>AI quickly determines: Is this a routine checkup? Emergency? New patient? Cosmetic interest? Routes accordingly.</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <h3>Fast Administrative Response</h3>
+                <p>AI sends professional, practice-branded follow-up messages. No diagnosis. No clinical guidance. Administrative only.</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">🔄</div>
+                <h3>Controlled Follow-up</h3>
+                <p>Your practice sets templates, tone, and escalation thresholds. Every message remains under your full control.</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">📞</div>
+                <h3>Booking Handoff</h3>
+                <p>If the lead confirms intent, seamlessly connect to your scheduling system or your team for final booking.</p>
+            </div>
+
+            <div class="benefit-card">
+                <div class="benefit-icon">🚨</div>
+                <h3>Human Escalation</h3>
+                <p>Clinical questions, emergencies, or sensitive inquiries automatically escalate to your staff for immediate human review.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- DEMO SECTION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="demo" id="demo">
+    <div class="container">
+        <h2>Test Your Lost Lead</h2>
+        <p class="section-subtitle">See how Dental Lead Recovery AI handles a real scenario.</p>
+
+        <div class="demo-container">
+            <div class="demo-form">
+                <h3>Simulate a Lead Inquiry</h3>
+                <form id="demo-form">
+                    <div class="form-group">
+                        <label for="demo-name">Name:</label>
+                        <input type="text" id="demo-name" placeholder="Sarah Johnson" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="demo-phone">Phone:</label>
+                        <input type="tel" id="demo-phone" placeholder="(555) 123-4567" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="demo-inquiry">Inquiry:</label>
+                        <textarea id="demo-inquiry" placeholder="I had a bad experience with my previous dentist and I'm looking for a new one. I have sensitivity in my upper teeth." rows="4" required></textarea>
+                    </div>
+
+                    <button type="submit" class="cta-secondary">Process Inquiry</button>
+                </form>
+            </div>
+
+            <div class="demo-result" id="demo-result" style="display: none;">
+                <h3>AI Response</h3>
+                <div class="demo-response-box">
+                    <p id="demo-response-text"></p>
+                </div>
+                <div class="demo-classification">
+                    <div class="classification-item">
+                        <span class="classification-label">Classification:</span>
+                        <span class="classification-value" id="demo-classification"></span>
+                    </div>
+                    <div class="classification-item">
+                        <span class="classification-label">Routing:</span>
+                        <span class="classification-value" id="demo-routing"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ROI CALCULATOR -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="calculator" id="calculator">
+    <div class="container">
+        <h2>Revenue Recovery Calculator</h2>
+        <p class="section-subtitle">Estimate your monthly recovery opportunity.</p>
+
+        <div class="calculator-container">
+            <div class="calculator-inputs">
+                <div class="input-group">
+                    <label for="inquiries">Monthly Inquiries (calls, forms, chat):</label>
+                    <div class="input-row">
+                        <input type="range" id="inquiries-range" min="10" max="500" value="100" step="10">
+                        <input type="number" id="inquiries" min="10" max="500" value="100">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="unbooked-pct">Unbooked Lead %:</label>
+                    <div class="input-row">
+                        <input type="range" id="unbooked-range" min="20" max="90" value="60" step="5">
+                        <input type="number" id="unbooked-pct" min="20" max="90" value="60">%
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="case-value">Average Case Value ($):</label>
+                    <div class="input-row">
+                        <input type="range" id="case-value-range" min="150" max="1000" value="400" step="50">
+                        <input type="number" id="case-value" min="150" max="1000" value="400">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="recovery-pct">Recovery % Scenario:</label>
+                    <div class="input-row">
+                        <input type="range" id="recovery-range" min="10" max="80" value="40" step="5">
+                        <input type="number" id="recovery-pct" min="10" max="80" value="40">%
+                    </div>
+                </div>
+            </div>
+
+            <div class="calculator-results">
+                <div class="result-card">
+                    <h3>Estimated Monthly Recovery</h3>
+                    <div class="result-large" id="monthly-recovery">$24,000</div>
+                    <p class="result-detail">Based on your inputs</p>
+                </div>
+
+                <div class="result-card">
+                    <h3>Annualized Scenario</h3>
+                    <div class="result-large" id="annual-recovery">$288,000</div>
+                    <p class="result-detail">Not a revenue guarantee</p>
+                </div>
+
+                <p class="calculator-disclaimer">
+                    ⚠️ <strong>Scenario estimate based on your inputs.</strong> Not a revenue guarantee. Actual results depend on implementation, team adoption, and market conditions.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- WORKFLOW COMPARISON TABLE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="comparison" id="comparison">
+    <div class="container">
+        <h2>Manual Follow-up vs Dental Lead Recovery AI</h2>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Capability</th>
+                    <th>Manual Follow-up</th>
+                    <th>Dental Lead Recovery AI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>24/7 Availability</td>
+                    <td>❌ Business hours only</td>
+                    <td>✅ Always on</td>
+                </tr>
+                <tr>
+                    <td>Response Time</td>
+                    <td>❌ Hours or days</td>
+                    <td>✅ Seconds</td>
+                </tr>
+                <tr>
+                    <td>Consistency</td>
+                    <td>❌ Varies by staff</td>
+                    <td>✅ Always professional</td>
+                </tr>
+                <tr>
+                    <td>Scalability</td>
+                    <td>❌ Limited by team size</td>
+                    <td>✅ Handles all leads</td>
+                </tr>
+                <tr>
+                    <td>Intent Detection</td>
+                    <td>❌ Manual assessment</td>
+                    <td>✅ AI qualification</td>
+                </tr>
+                <tr>
+                    <td>Escalation</td>
+                    <td>❌ Unpredictable</td>
+                    <td>✅ Automatic for sensitive inquiries</td>
+                </tr>
+                <tr>
+                    <td>Practice Control</td>
+                    <td>✅ Full control</td>
+                    <td>✅ Full control via templates</td>
+                </tr>
+                <tr>
+                    <td>Cost</td>
+                    <td>❌ High labor costs</td>
+                    <td>✅ $500/month</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PRICING SECTION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <h2>30-Day Dental Lead Recovery Pilot</h2>
+        <p class="section-subtitle">Try risk-free. Full functionality. Cancel anytime.</p>
+
+        <div class="pricing-card">
+            <div class="pricing-header">
+                <h3>Pilot Package</h3>
+                <p class="pricing-description">Everything you need to recover lost dental leads</p>
+            </div>
+
+            <div class="pricing-breakdown">
+                <div class="pricing-item">
+                    <span class="pricing-label">Setup Fee (one-time)</span>
+                    <span class="pricing-amount">$500</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="pricing-label">Monthly Subscription</span>
+                    <span class="pricing-amount">$500/month</span>
+                </div>
+                <div class="pricing-divider"></div>
+                <div class="pricing-item total">
+                    <span class="pricing-label">Due Today</span>
+                    <span class="pricing-amount">$1,000</span>
+                </div>
+            </div>
+
+            <p class="pricing-note">Before applicable taxes</p>
+
+            <div class="pricing-features">
+                <h4>Pilot Includes:</h4>
+                <ul>
+                    <li>✅ Unlimited lead capture & AI qualification</li>
+                    <li>✅ Practice-controlled message templates</li>
+                    <li>✅ 24/7 automated follow-up</li>
+                    <li>✅ Human escalation for clinical questions</li>
+                    <li>✅ Booking integration setup</li>
+                    <li>✅ 30 days of full access</li>
+                    <li>✅ Email support</li>
+                </ul>
+            </div>
+
+            <p class="pricing-renewal">
+                After pilot: $500/month recurring subscription. Cancel anytime according to Paddle billing terms.
+            </p>
+
+            <button class="cta-primary large" id="pricing-start-pilot">
+                Start Pilot — $1,000 Today
+            </button>
+
+            <p class="cta-subtext">
+                Secure checkout powered by Paddle.<br>
+                Taxes may apply based on buyer location.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SAFETY & CLINIC CONTROL SECTION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="safety">
+    <div class="container">
+        <h2>Safety & Clinic Control</h2>
+        <p class="section-subtitle">Your practice always stays in control.</p>
+
+        <div class="safety-grid">
+            <div class="safety-card">
+                <div class="safety-icon">🛡️</div>
+                <h3>Administrative Only</h3>
+                <p>Dental Lead Recovery AI handles administrative lead follow-up only. No diagnosis. No treatment advice. No medical guidance.</p>
+            </div>
+
+            <div class="safety-card">
+                <div class="safety-icon">👨‍⚕️</div>
+                <h3>Automatic Human Escalation</h3>
+                <p>Keywords like "severe pain," "bleeding," "infection," "emergency," or clinical questions trigger immediate escalation to your staff.</p>
+            </div>
+
+            <div class="safety-card">
+                <div class="safety-icon">⚙️</div>
+                <h3>Practice-Controlled Workflows</h3>
+                <p>You set all message templates, follow-up timing, lead sources, and escalation thresholds. Full customization.</p>
+            </div>
+
+            <div class="safety-card">
+                <div class="safety-icon">🔐</div>
+                <h3>HIPAA-Ready</h3>
+                <p>No patient records stored. No clinical data processed. Pre-appointment lead recovery only. Your data stays yours.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FAQ SECTION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section class="faq" id="faq">
+    <div class="container">
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-grid">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What if I cancel during the pilot?
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                    <p>You can cancel your subscription at any time. If you cancel during the 30-day pilot, you'll lose access but won't be charged the recurring $500/month after the pilot ends. Your data will be securely deleted according to our retention policy.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How does the AI know when to escalate?
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                    <p>The AI monitors incoming inquiries for keywords and phrases that indicate clinical, emergency, or sensitive concerns. Phrases like "severe pain," "swelling," "bleeding," "medication," or requests for diagnosis trigger automatic escalation to your team. You can also customize escalation rules during onboarding.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What are the taxes and billing frequency?
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                    <p>Checkout today for $1,000 (setup $500 + first month $500). After the pilot, you'll be billed $500/month on the same date. Taxes are calculated at checkout based on your location and jurisdiction. See Paddle's billing terms for details on tax treatment.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    How do I integrate with my scheduling system?
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                    <p>During your onboarding call, we'll discuss your current booking flow (Acuity, Zoho, Dentrix, etc.). We can set up integrations or manual handoff processes to ensure recovered leads connect directly to your availability.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    Is there a long-term contract?
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                    <p>No. This is a month-to-month subscription. You can cancel anytime after the 30-day pilot. No hidden fees. No lock-in. Manage your subscription through your Paddle account.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    What happens after I buy today?
+                    <span class="faq-toggle">+</span>
+                </button>
+                <div class="faq-answer" style="display: none;">
+                    <p>After checkout, you'll complete our onboarding form with practice details, messaging templates, and integration preferences. Our team will review and set up your AI workflows. You'll get access to the dashboard within 1–2 business days and be live 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- MOBILE STICKY CTA -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="mobile-sticky-cta" id="mobile-sticky-cta">
+    <button id="mobile-start-pilot">Start Pilot — $1,000</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Dental Lead Recovery AI</h4>
+                <p>Automated administrative lead recovery for US private dental practices.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="/refund-cancellation">Refund & Cancellation</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>
+                    Email: <a href="mailto:abdallatifelabdi@gmail.com">abdallatifelabdi@gmail.com</a><br>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dental Lead Recovery AI. All rights reserved.</p>
+            <p>Secure billing powered by Paddle. No diagnosis or clinical advice. Practice-controlled workflows.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PADDLE.JS AND APPLICATION SCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script src="./payment-config.js"></script>
+<script src="./app.js"></script>
+
+</body>
+</html>
