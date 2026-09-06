@@ -2,139 +2,55 @@
 
 import { useState } from 'react'
 
-type PaddleCheckout = {
-  open: (options: {
-    items: { priceId: string; quantity: number }[]
-    settings: { displayMode: 'overlay'; theme: 'dark'; successUrl: string }
-  }) => void
-}
-
-type PaddleGlobal = {
-  Checkout: PaddleCheckout
-}
-
-declare global {
-  interface Window {
-    Paddle?: PaddleGlobal
-  }
-}
-
 const setupPriceId = 'pri_01m1shqcndzt6xxxlkcq4nz4ptv'
 const monthlyPriceId = 'pri_01m1sj4rgc3px4x85yppq5ysh2'
 const successUrl = 'https://dentalai.site/onboarding'
 
+type PaddleGlobal = { Checkout: { open: (options: { items: { priceId: string; quantity: number }[]; settings: { displayMode: 'overlay'; theme: 'dark'; locale: 'en'; successUrl: string } }) => void } }
+declare global { interface Window { Paddle?: PaddleGlobal } }
+
 function openPilotCheckout() {
   if (!window.Paddle) return false
-
-  window.Paddle.Checkout.open({
-    items: [
-      { priceId: setupPriceId, quantity: 1 },
-      { priceId: monthlyPriceId, quantity: 1 },
-    ],
-    settings: {
-      displayMode: 'overlay',
-      theme: 'dark',
-      successUrl,
-    },
-  })
-
+  window.Paddle.Checkout.open({ items: [{ priceId: setupPriceId, quantity: 1 }, { priceId: monthlyPriceId, quantity: 1 }], settings: { displayMode: 'overlay', theme: 'dark', locale: 'en', successUrl } })
   return true
 }
 
+const faqs = [
+  ['Is DentalAI HIPAA compliant?', 'DentalAI uses a HIPAA-conscious architecture with encrypted transport, least-privilege access, audit-ready workflows, and configurable data retention. Your practice remains responsible for its own policies and agreements.'],
+  ['Which PMS systems do you support?', 'DentalAI is designed to work with the systems your team already uses. During onboarding, we confirm your PMS, calendar permissions, and the safest booking workflow for your practice.'],
+  ['How quickly can we launch?', 'Most pilot practices are configured in a focused onboarding session. We map your services, escalation rules, office hours, and booking preferences before turning on live lead recovery.'],
+  ['What happens when a lead needs a human?', 'Clinical or sensitive questions are routed to your team with context, urgency, and the full conversation attached. DentalAI handles the handoff; your clinicians make the call.'],
+  ['Can we cancel at any time?', 'Yes. There is no long-term contract. Cancel your monthly subscription before the next billing cycle and your account will wind down with a clear export and handoff process.'],
+  ['What is included in the pilot?', 'The pilot includes setup, workflow configuration, PMS/calendar mapping, team training, live monitoring, and the first month of the DentalAI platform.'],
+]
+
 export default function Page() {
+  const [inquiries, setInquiries] = useState(120)
+  const [caseValue, setCaseValue] = useState(2200)
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
   const [checkoutMessage, setCheckoutMessage] = useState('')
+  const recovered = Math.round(inquiries * 0.18 * caseValue)
+  const handleCheckout = () => { if (!openPilotCheckout()) setCheckoutMessage('Checkout is loading. Please try again in a moment.') }
 
-  function handleCheckout() {
-    const didOpen = openPilotCheckout()
-    if (!didOpen) {
-      setCheckoutMessage('Checkout is still loading. Please try again in a moment.')
-    }
-  }
+  return <main id="top" className="min-h-screen overflow-hidden bg-background text-foreground">
+    <nav className="sticky top-0 z-40 border-b border-border/70 bg-background/90 backdrop-blur-xl"><div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-10"><a href="#top" className="flex items-center gap-3" aria-label="DentalAI home"><span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground"><svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 fill-none stroke-current" strokeWidth="1.8"><path d="M8.7 4.5c1.2-.8 2.1.2 3.3.2s2.1-1 3.3-.2c2.3 1.5 2.9 4.7 2.2 7.6-.7 2.9-1.6 7.3-3.4 7.3-1.2 0-1.4-2.5-2.1-2.5s-.9 2.5-2.1 2.5c-1.8 0-2.7-4.4-3.4-7.3C5.8 9.2 6.4 6 8.7 4.5Z"/><path d="M12 4.7V2.8M10.1 3.3 9 1.9M13.9 3.3 15 1.9"/></svg></span><span className="font-mono text-sm font-bold tracking-[0.18em] text-primary">DENTALAI</span></a><div className="hidden items-center gap-7 text-sm text-muted-foreground lg:flex"><a href="#features" className="hover:text-primary">Features</a><a href="#roi" className="hover:text-primary">ROI calculator</a><a href="#workflow" className="hover:text-primary">Workflow</a><a href="#pricing" className="hover:text-primary">Pricing</a><a href="#faq" className="hover:text-primary">FAQ</a></div><button onClick={handleCheckout} className="rounded-full bg-accent px-5 py-2.5 text-sm font-bold text-accent-foreground shadow-lg shadow-accent/10 hover:brightness-95">Start pilot <span aria-hidden="true">↗</span></button></div></nav>
 
-  return (
-    <main className="min-h-screen overflow-hidden bg-background text-foreground">
-      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-6 sm:px-10 lg:px-16">
-        <header className="flex items-center justify-between border-b border-border/70 py-6">
-          <a href="#top" className="flex items-center gap-3" aria-label="DentalAI home">
-            <span className="flex size-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-              <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 fill-none stroke-current" strokeWidth="1.8">
-                <path d="M8.7 4.5c1.2-.8 2.1.2 3.3.2s2.1-1 3.3-.2c2.3 1.5 2.9 4.7 2.2 7.6-.7 2.9-1.6 7.3-3.4 7.3-1.2 0-1.4-2.5-2.1-2.5s-.9 2.5-2.1 2.5c-1.8 0-2.7-4.4-3.4-7.3C5.8 9.2 6.4 6 8.7 4.5Z" />
-                <path d="M12 4.7V2.8M10.1 3.3 9 1.9M13.9 3.3 15 1.9" />
-              </svg>
-            </span>
-            <span className="font-mono text-sm font-semibold tracking-[0.18em] text-primary">DENTALAI</span>
-          </a>
-          <button type="button" onClick={handleCheckout} className="hidden rounded-full border border-border px-5 py-2.5 text-sm font-medium transition hover:border-primary hover:text-primary sm:block">
-            Get started <span aria-hidden="true">↗</span>
-          </button>
-        </header>
+    <section className="border-b border-border bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-14 px-6 py-20 lg:grid-cols-[1.05fr_.95fr] lg:px-10 lg:py-28"><div><p className="mb-7 inline-flex rounded-full border border-primary-foreground/20 px-3 py-1.5 font-mono text-xs uppercase tracking-[.16em] text-primary-foreground/70">The revenue recovery layer for dentistry</p><h1 className="max-w-4xl text-balance text-5xl font-semibold leading-[1.02] tracking-[-.055em] sm:text-7xl">24/7 AI Front-Desk &amp; Patient Lead Recovery for Dental Practices</h1><p className="mt-7 max-w-2xl text-pretty text-lg leading-8 text-primary-foreground/70 sm:text-xl">Automatically capture missed calls, qualify inquiries, and book high-value treatment plans directly into your PMS.</p><div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center"><button onClick={handleCheckout} className="rounded-full bg-accent px-7 py-4 text-sm font-bold text-accent-foreground shadow-xl shadow-black/10 hover:brightness-95">Start Pilot ($500 Setup + $500/mo) <span aria-hidden="true">↗</span></button><span className="text-sm text-primary-foreground/60">Built for busy US practices</span></div>{checkoutMessage && <p role="status" className="mt-3 text-sm text-accent">{checkoutMessage}</p>}<div className="mt-10 flex flex-wrap gap-3 text-xs font-medium text-primary-foreground/70"><span className="rounded-full border border-primary-foreground/20 px-3 py-2">HIPAA-conscious architecture</span><span className="rounded-full border border-primary-foreground/20 px-3 py-2">Zero contract</span><span className="rounded-full border border-primary-foreground/20 px-3 py-2">Instant setup</span></div></div><div className="rounded-[2rem] border border-primary-foreground/15 bg-primary-foreground/5 p-6 shadow-2xl backdrop-blur sm:p-8"><div className="flex items-center justify-between border-b border-primary-foreground/15 pb-5"><div><p className="font-mono text-xs uppercase tracking-[.16em] text-primary-foreground/50">Live practice signal</p><p className="mt-2 text-lg font-semibold">Lead recovery engine</p></div><span className="size-3 rounded-full bg-accent shadow-[0_0_22px] shadow-accent"/></div><div className="space-y-3 py-6"><div className="rounded-xl bg-primary-foreground/10 p-4"><div className="flex justify-between text-sm"><span>Missed call detected</span><span className="text-accent">00:08</span></div><div className="mt-3 h-1.5 rounded-full bg-primary-foreground/10"><div className="h-full w-4/5 rounded-full bg-accent"/></div></div><div className="rounded-xl bg-primary-foreground/10 p-4"><div className="flex justify-between text-sm"><span>Intent qualified</span><span className="text-accent">High value</span></div><p className="mt-2 text-xs text-primary-foreground/50">Implant consultation · insurance verified</p></div><div className="rounded-xl bg-accent p-4 text-accent-foreground"><div className="flex justify-between text-sm font-bold"><span>Appointment booked</span><span>Tomorrow · 10:30</span></div><p className="mt-2 text-xs opacity-70">Synced to PMS calendar</p></div></div><div className="flex justify-between font-mono text-[10px] uppercase tracking-[.14em] text-primary-foreground/45"><span>Response time: 2 min</span><span>System active</span></div></div></div></section>
 
-        <section id="top" className="grid flex-1 items-center gap-14 py-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-20 lg:py-28">
-          <div className="max-w-2xl">
-            <p className="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">
-              <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
-              AI-powered dental operations
-            </p>
-            <h1 className="max-w-xl text-balance font-sans text-5xl font-semibold leading-[1.04] tracking-[-0.055em] text-primary sm:text-7xl">
-              Your practice, <span className="text-accent">thinking ahead.</span>
-            </h1>
-            <p className="mt-8 max-w-lg text-pretty text-lg leading-8 text-muted-foreground sm:text-xl">
-              DentalAI turns the daily noise of a modern practice into clear next steps—so your team can focus on the patients in front of you.
-            </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <button type="button" onClick={handleCheckout} className="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-7 py-4 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/10 transition hover:-translate-y-0.5 hover:bg-primary/90">
-                Start pilot
-                <span className="flex size-6 items-center justify-center rounded-full bg-accent text-accent-foreground transition group-hover:translate-x-0.5" aria-hidden="true">↗</span>
-              </button>
-              <span className="text-sm text-muted-foreground">$500 setup + $500 / month</span>
-            </div>
-            <p className="mt-5 text-xs leading-5 text-muted-foreground">Secure payment via Paddle. Your onboarding link arrives after checkout.</p>
-            {checkoutMessage ? <p role="status" className="mt-3 text-sm font-medium text-accent">{checkoutMessage}</p> : null}
-          </div>
+    <section id="roi" className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28"><div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center"><div><p className="font-mono text-xs uppercase tracking-[.16em] text-accent-foreground">Revenue visibility</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.045em] sm:text-5xl">See what one recovered lead is worth.</h2><p className="mt-5 leading-7 text-muted-foreground">Model the upside from responding faster to the inquiries your front desk cannot reach in the moment.</p></div><div className="rounded-[1.75rem] border border-border bg-card p-6 shadow-xl shadow-primary/5 sm:p-9"><div className="grid gap-8 sm:grid-cols-2"><label className="text-sm font-medium">Monthly inquiries <span className="float-right font-mono text-accent-foreground">{inquiries}</span><input aria-label="Monthly inquiries" type="range" min="20" max="400" step="10" value={inquiries} onChange={e => setInquiries(Number(e.target.value))} className="mt-5 w-full accent-[var(--accent)]"/></label><label className="text-sm font-medium">Average case value <span className="float-right font-mono text-accent-foreground">${caseValue.toLocaleString()}</span><input aria-label="Average case value" type="range" min="800" max="5000" step="100" value={caseValue} onChange={e => setCaseValue(Number(e.target.value))} className="mt-5 w-full accent-[var(--accent)]"/></label></div><div className="mt-9 flex flex-col justify-between gap-5 border-t border-border pt-7 sm:flex-row sm:items-end"><div><p className="font-mono text-xs uppercase tracking-[.15em] text-muted-foreground">Estimated monthly recovery</p><p className="mt-2 text-5xl font-semibold tracking-[-.06em] text-primary">${recovered.toLocaleString()}</p></div><p className="max-w-xs text-sm leading-6 text-muted-foreground">Based on an illustrative 18% recovery rate. Your pilot measures your actual baseline.</p></div></div></div></section>
 
-          <div className="relative mx-auto w-full max-w-md lg:justify-self-end">
-            <div className="relative aspect-square overflow-hidden rounded-[2rem] border border-primary/10 bg-primary p-8 text-primary-foreground shadow-2xl shadow-primary/15 sm:p-12">
-              <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.2) 1px, transparent 1px)', backgroundSize: '42px 42px' }} aria-hidden="true" />
-              <div className="relative flex h-full flex-col justify-between">
-                <div className="flex items-start justify-between">
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-primary-foreground/60">Practice intelligence / 01</span>
-                  <span className="size-3 rounded-full bg-accent shadow-[0_0_24px_rgba(116,227,190,.8)]" aria-label="System active" />
-                </div>
-                <div>
-                  <div className="mb-8 flex size-24 items-center justify-center rounded-[1.5rem] border border-primary-foreground/20 bg-primary-foreground/10 backdrop-blur sm:size-32">
-                    <svg aria-hidden="true" viewBox="0 0 80 80" className="size-16 fill-none stroke-accent sm:size-24" strokeWidth="2">
-                      <path d="M29 18c5-3 8 2 11 2s6-5 11-2c8 5 10 15 7 25-3 10-6 23-12 23-5 0-4-10-6-10s-1 10-6 10c-6 0-9-13-12-23-3-10-1-20 7-25Z" />
-                      <path d="M40 20V8M33 13l-5-7M47 13l5-7" />
-                    </svg>
-                  </div>
-                  <p className="max-w-xs text-2xl font-medium leading-tight tracking-[-0.03em] sm:text-3xl">Less admin. More care.</p>
-                </div>
-                <div className="flex items-end justify-between border-t border-primary-foreground/20 pt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-primary-foreground/60">
-                  <span>Live pilot system</span>
-                  <span>v.01</span>
-                </div>
-              </div>
-            </div>
-            <div className="absolute -bottom-5 -left-5 rounded-2xl border border-border bg-card px-4 py-3 shadow-xl sm:-left-8">
-              <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted-foreground">Signal detected</p>
-              <p className="mt-1 text-sm font-semibold text-primary">Ready for your team</p>
-            </div>
-          </div>
-        </section>
+    <section id="features" className="border-y border-border bg-secondary/45"><div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28"><div className="max-w-2xl"><p className="font-mono text-xs uppercase tracking-[.16em] text-muted-foreground">One operating layer</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.045em] sm:text-5xl">The front desk that never clocks out.</h2></div><div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2"><Feature title="24/7 immediate lead capture" text="Respond to web, text, and missed-call inquiries while intent is still high." icon="01"/><Feature title="PMS calendar booking" text="Move qualified patients from conversation to confirmed appointment without double entry." icon="02"/><Feature title="Clinical escalation protocols" text="Route clinical, urgent, or sensitive questions to the right person with full context." icon="03"/><Feature title="Real-time analytics dashboard" text="See response time, booked value, and recovery trends in one decision-ready view." icon="04"/></div></div></section>
 
-        <section className="grid border-t border-border py-10 sm:grid-cols-3 sm:gap-10">
-          <div className="border-b border-border pb-6 sm:border-b-0 sm:border-r sm:pb-0"><p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">01 / Clarity</p><p className="mt-3 max-w-xs text-sm leading-6">Turn scattered practice data into a calm, prioritized view.</p></div>
-          <div className="border-b border-border py-6 sm:border-b-0 sm:border-r sm:py-0 sm:pl-8"><p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">02 / Momentum</p><p className="mt-3 max-w-xs text-sm leading-6">Spot opportunities and bottlenecks before they cost your team time.</p></div>
-          <div className="pt-6 sm:pt-0 sm:pl-8"><p className="font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground">03 / Partnership</p><p className="mt-3 max-w-xs text-sm leading-6">A thoughtful AI layer that works alongside the people who care.</p></div>
-        </section>
+    <section id="workflow" className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28"><div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end"><div><p className="font-mono text-xs uppercase tracking-[.16em] text-muted-foreground">Operational difference</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.045em] sm:text-5xl">Speed is a clinical advantage.</h2></div><p className="max-w-md text-sm leading-6 text-muted-foreground">DentalAI gives every inquiry a consistent, useful next step—without asking your team to become a call center.</p></div><div className="mt-12 overflow-hidden rounded-2xl border border-border"><div className="grid grid-cols-3 bg-primary px-5 py-4 text-xs font-semibold uppercase tracking-[.12em] text-primary-foreground sm:px-8"><span>Capability</span><span>Manual follow-up</span><span className="text-accent">DentalAI</span></div>{[['First response','Hours or next business day','Under 2 minutes'],['Qualification','Inconsistent notes','Structured intent + context'],['Booking','Phone tag and callbacks','Direct PMS workflow'],['Visibility','End-of-month guesswork','Real-time recovery metrics']].map(row => <div key={row[0]} className="grid grid-cols-3 border-t border-border px-5 py-5 text-sm sm:px-8"><span className="font-semibold text-primary">{row[0]}</span><span className="text-muted-foreground">{row[1]}</span><span className="font-medium text-accent-foreground">{row[2]}</span></div>)}</div></section>
 
-        <footer className="flex flex-col gap-4 border-t border-border py-7 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2026 DentalAI</span>
-          <span>Built for better days in dentistry.</span>
-        </footer>
-      </div>
-    </main>
-  )
+    <section id="pricing" className="bg-primary text-primary-foreground"><div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1fr_.8fr] lg:px-10 lg:py-28"><div><p className="font-mono text-xs uppercase tracking-[.16em] text-primary-foreground/55">Pilot pricing</p><h2 className="mt-4 max-w-xl text-4xl font-semibold tracking-[-.045em] sm:text-5xl">Start recovering revenue this month.</h2><p className="mt-5 max-w-xl leading-7 text-primary-foreground/65">A focused implementation, a live workflow, and a monthly operating layer your team can measure.</p><div className="mt-10 grid gap-4 sm:grid-cols-3"><div><p className="text-3xl font-semibold text-accent">$500</p><p className="mt-2 text-sm text-primary-foreground/55">One-time setup</p></div><div><p className="text-3xl font-semibold text-accent">$500</p><p className="mt-2 text-sm text-primary-foreground/55">Monthly platform</p></div><div><p className="text-3xl font-semibold text-accent">$0</p><p className="mt-2 text-sm text-primary-foreground/55">Long-term contract</p></div></div></div><div className="rounded-2xl bg-card p-7 text-card-foreground shadow-2xl sm:p-9"><div className="flex items-start justify-between"><div><p className="font-mono text-xs uppercase tracking-[.15em] text-muted-foreground">DentalAI pilot</p><h3 className="mt-3 text-2xl font-semibold text-primary">Practice launch package</h3></div><span className="rounded-full bg-accent/30 px-3 py-1 text-xs font-bold text-accent-foreground">Limited pilots</span></div><div className="mt-8 space-y-4 border-y border-border py-6 text-sm"><div className="flex justify-between"><span>Implementation &amp; onboarding</span><span className="font-semibold">$500 one-time</span></div><div className="flex justify-between"><span>DentalAI platform</span><span className="font-semibold">$500 / month</span></div><div className="flex justify-between"><span>Setup, training &amp; monitoring</span><span className="font-semibold">Included</span></div></div><button onClick={handleCheckout} className="mt-7 w-full rounded-full bg-accent px-6 py-4 text-sm font-bold text-accent-foreground hover:brightness-95">Get started with the pilot <span aria-hidden="true">↗</span></button><p className="mt-4 text-center text-xs leading-5 text-muted-foreground">Secure checkout via Paddle. No long-term commitment.</p></div></div></section>
+
+    <section id="faq" className="mx-auto max-w-4xl px-6 py-20 lg:py-28"><div className="text-center"><p className="font-mono text-xs uppercase tracking-[.16em] text-muted-foreground">Questions, answered</p><h2 className="mt-4 text-4xl font-semibold tracking-[-.045em] sm:text-5xl">Built for responsible growth.</h2></div><div className="mt-12 divide-y divide-border border-y border-border">{faqs.map(([q, a], i) => <div key={q}><button className="flex w-full items-center justify-between gap-5 py-6 text-left text-base font-semibold text-primary" aria-expanded={openFaq === i} onClick={() => setOpenFaq(openFaq === i ? null : i)}><span>{q}</span><span className="text-2xl font-normal text-accent-foreground">{openFaq === i ? '−' : '+'}</span></button>{openFaq === i && <p className="max-w-3xl pb-6 pr-10 text-sm leading-7 text-muted-foreground">{a}</p>}</div>)}</div></section>
+
+    <footer className="border-t border-border"><div className="mx-auto flex max-w-7xl flex-col gap-7 px-6 py-10 lg:px-10"><div className="flex flex-col justify-between gap-6 sm:flex-row"><div><p className="font-mono text-sm font-bold tracking-[.18em] text-primary">DENTALAI</p><p className="mt-3 max-w-xs text-sm leading-6 text-muted-foreground">The intelligent revenue recovery layer for modern dental practices.</p></div><div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Refund Policy</a></div></div><div className="flex flex-col justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row"><span>© 2026 DentalAI. All rights reserved.</span><span>Encrypted transport · Access controls · Audit-ready workflows</span></div></div></footer>
+  </main>
 }
+
+function Feature({ title, text, icon }: { title: string; text: string; icon: string }) { return <article className="bg-card p-7 sm:p-9"><span className="font-mono text-xs text-accent-foreground">{icon}</span><h3 className="mt-12 text-xl font-semibold text-primary">{title}</h3><p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">{text}</p></article> }
 
 export {}
