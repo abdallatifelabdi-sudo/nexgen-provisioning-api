@@ -10,8 +10,21 @@ type PaddleGlobal = { Checkout: { open: (options: { items: { priceId: string; qu
 declare global { interface Window { Paddle?: PaddleGlobal } }
 
 function openPilotCheckout() {
-  if (!window.Paddle) return false
-  window.Paddle.Checkout.open({ items: [{ priceId: setupPriceId, quantity: 1 }, { priceId: monthlyPriceId, quantity: 1 }], settings: { displayMode: 'overlay', theme: 'dark', locale: 'en', successUrl } })
+  if (!window.Paddle?.Checkout?.open) return false
+
+  window.Paddle.Checkout.open({
+    items: [
+      { priceId: setupPriceId, quantity: 1 },
+      { priceId: monthlyPriceId, quantity: 1 },
+    ],
+    settings: {
+      displayMode: 'overlay',
+      theme: 'dark',
+      locale: 'en',
+      successUrl,
+    },
+  })
+
   return true
 }
 
